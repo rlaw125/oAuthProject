@@ -10,7 +10,6 @@ module.exports = (app, db)=>{
   
   app.listen(process.env.PORT, ()=>{
   passport.serializeUser((user, done)=>{
-  console.log("Successfully serialized :" + JSON.stringify(user)); 
     if (user.provider){
        done(null, "github:"+user._id); 
         }
@@ -31,7 +30,6 @@ module.exports = (app, db)=>{
     }
  db.collection(userCollection).findOne({_id: new ObjectID(id)}, (err,doc)=>{
    if (err){console.log("New objectID not found!");return done(err)}
-   console.log("Deserialization success!")
   done(null, doc);
  }); 
 }); 
@@ -42,7 +40,6 @@ module.exports = (app, db)=>{
     callbackURL: "https://easy-sturgeon.glitch.me/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, cb) {
-    console.log("in passportGithub: " + process.env.GITHUB_CLIENT_ID);
    
  db.collection('socialusers').findAndModify(
     {id: profile.id},
@@ -51,7 +48,6 @@ module.exports = (app, db)=>{
         id: profile.id,
         name: profile.displayName || 'John Doe',
         photo: profile.photos[0].value || '',
-       // email: profile.emails[0].value || 'No public email',
         created_on: new Date(),
         provider: profile.provider || ''
     },$set:{
@@ -64,34 +60,9 @@ module.exports = (app, db)=>{
       if (err){
       return cb(err, null);
       } 
-       console.log('Profile saved or modified: '+ JSON.stringify(profile));
         return cb(null, doc.value);
     }
 );
-    /*
-    db.collection('users').findOne({ githubId: profile.id }, function (err, user) {
-      console.log("github profileId created");
-      if (err){
-      console.log("Database error in passport Github: " +err);
-      return cb(err, null);
-      } else if (user!==null){
-      console.log("github profile exists");
-      return cb(null, user);
-      } else {
-      
-        
-      db.collection('users').insertOne({githubId: profile.id}, function(err, user){
-      if (err){
-        console.log("Error saving github profile");
-      return cb(err, null);
-        console.log("Success saving github profile id.")
-      }
-        return cb(null, accessToken);
-      }); 
-        
-      }
-    });  */
-    
     
   }
 ));

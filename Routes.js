@@ -11,10 +11,9 @@ module.exports = (app, db)=>{
   let ensureAuthenticated = (req, res, next)=>{
   console.log("Ensure Authenticated Request: "+req);
 if (req.isAuthenticated()){
-  console.log("User authenticated");
 return next();
 }
-  console.log("User not authenticated.");
+ 
   res.redirect('/');
 }
   
@@ -25,7 +24,6 @@ return next();
 app.post('/login', passport.authenticate('local', {failureRedirect:'/', successRedirect: '/profile'})); 
 
 app.route('/profile').get(ensureAuthenticated, (req, res)=>{  
-  console.log("Profile route in app.get()");
 res.render(process.cwd()+'/views/pug/profile.pug', {username: req.user.username});
 });
 
