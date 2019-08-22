@@ -10,6 +10,7 @@ module.exports = (app, db)=>{
   
   app.listen(process.env.PORT, ()=>{
   passport.serializeUser((user, done)=>{
+
     if (user.provider){
        done(null, "github:"+user._id); 
         }
@@ -30,6 +31,7 @@ module.exports = (app, db)=>{
     }
  db.collection(userCollection).findOne({_id: new ObjectID(id)}, (err,doc)=>{
    if (err){console.log("New objectID not found!");return done(err)}
+
   done(null, doc);
  }); 
 }); 
@@ -60,6 +62,7 @@ module.exports = (app, db)=>{
       if (err){
       return cb(err, null);
       } 
+
         return cb(null, doc.value);
     }
 );

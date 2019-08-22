@@ -13,7 +13,6 @@ module.exports = (app, db)=>{
 if (req.isAuthenticated()){
 return next();
 }
- 
   res.redirect('/');
 }
   
@@ -24,6 +23,7 @@ return next();
 app.post('/login', passport.authenticate('local', {failureRedirect:'/', successRedirect: '/profile'})); 
 
 app.route('/profile').get(ensureAuthenticated, (req, res)=>{  
+  
 res.render(process.cwd()+'/views/pug/profile.pug', {username: req.user.username});
 });
 
