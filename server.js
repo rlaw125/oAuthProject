@@ -13,10 +13,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const GitHubStrategy = require('passport-github').Strategy; 
 
-
-
 fccTesting(app); //For FCC testing purposes
-
 
 mongo.connect(process.env.DATABASE, (err, db)=>{
   if (err){
@@ -26,7 +23,6 @@ mongo.connect(process.env.DATABASE, (err, db)=>{
   auth(app, db);
   routes(app, db);   
 });
-
 
 
 if (process.env.ENABLE_DELAYS){
@@ -62,8 +58,3 @@ app.use(passport.session());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
  
-
-/*
-app.listen(process.env.PORT || 3000, () => {
-  console.log("Listening on port " + process.env.PORT);
-}); */

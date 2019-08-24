@@ -10,14 +10,12 @@ module.exports = (app, db)=>{
   
   app.listen(process.env.PORT, ()=>{
   passport.serializeUser((user, done)=>{
-
     if (user.provider){
        done(null, "github:"+user._id); 
         }
     else {
       done(null, user._id);
     }
-  
   });
   });
     
@@ -26,12 +24,10 @@ module.exports = (app, db)=>{
     let userCollection = "users";
     if (reggles.test(id)){
       id = id.slice(7);
-      console.log(id);
     userCollection = "socialusers";
     }
  db.collection(userCollection).findOne({_id: new ObjectID(id)}, (err,doc)=>{
    if (err){console.log("New objectID not found!");return done(err)}
-
   done(null, doc);
  }); 
 }); 
@@ -42,13 +38,13 @@ module.exports = (app, db)=>{
     callbackURL: "https://easy-sturgeon.glitch.me/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, cb) {
-   
+   console.log(profile)
  db.collection('socialusers').findAndModify(
     {id: profile.id},
     {},
     {$setOnInsert:{
         id: profile.id,
-        name: profile.displayName || 'John Doe',
+        name: profile.displayName || 'Anonymous',
         photo: profile.photos[0].value || '',
         created_on: new Date(),
         provider: profile.provider || ''
@@ -62,7 +58,6 @@ module.exports = (app, db)=>{
       if (err){
       return cb(err, null);
       } 
-
         return cb(null, doc.value);
     }
 );
@@ -70,9 +65,8 @@ module.exports = (app, db)=>{
   }
 ));
 
-    
+  
   passport.use(new LocalStrategy((username, password,done)=>{
-    console.log('passport-local: '+username);
   db.collection('users').findOne({username:username}, (err, user)=>{
   console.log('User: '+username+' attempted to login');
   if (err){ return done(err)};
@@ -83,8 +77,4 @@ module.exports = (app, db)=>{
   });
   }));
     
-  
-
-
-
 }

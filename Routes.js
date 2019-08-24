@@ -5,26 +5,24 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const GitHubStrategy = require('passport-github').Strategy;
 
-
 module.exports = (app, db)=>{
   
-  let ensureAuthenticated = (req, res, next)=>{
-  console.log("Ensure Authenticated Request: "+req);
+let ensureAuthenticated = (req, res, next)=>{
 if (req.isAuthenticated()){
 return next();
 }
+ 
   res.redirect('/');
 }
   
   app.route('/').get((req, res) => {
-    res.render(process.cwd()+'/views/pug/index.pug', {title:'Hello', message: 'Please login', showLogin: true, showRegistration: true});
+    res.render(process.cwd()+'/views/pug/index.pug', {title:'Welcome to my OAuth Project', message: 'Please login', showLogin: true, showRegistration: true});
   });
 
 app.post('/login', passport.authenticate('local', {failureRedirect:'/', successRedirect: '/profile'})); 
 
 app.route('/profile').get(ensureAuthenticated, (req, res)=>{  
-  
-res.render(process.cwd()+'/views/pug/profile.pug', {username: req.user.username});
+res.render(process.cwd()+'/views/pug/profile.pug', {username: req.user.name});
 });
 
 app.route('/logout').get((req, res)=>{
@@ -60,7 +58,6 @@ db.collection('users').findOne({ username: req.body.username }, function (err, u
 }, passport.authenticate('local', { failureRedirect: '/', successRedirect:'/profile'}));
   
   
-  
 app.route('/auth/github')
   .get(passport.authenticate('github'));
   
@@ -73,10 +70,8 @@ res.redirect('/profile');
 });
   
   
-
 app.use((req, res, next)=>{
 res.status(404).type('text').send('Not found');
 });
-
 
 }
