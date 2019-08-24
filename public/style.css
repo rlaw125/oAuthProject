@@ -1,6 +1,9 @@
-body {
-background: linear-gradient(150deg, pink, lightblue, lightgreen);
+html {
+  background: linear-gradient(270deg, #c1e1ec, #eafeea);
+  font-family: sans-serif;
 }
+
+
 .border {
   border-style: inset;
   border-width: 1px;
