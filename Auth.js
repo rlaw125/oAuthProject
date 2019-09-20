@@ -38,7 +38,6 @@ module.exports = (app, db)=>{
     callbackURL: "https://easy-sturgeon.glitch.me/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, cb) {
-   console.log(profile)
  db.collection('socialusers').findAndModify(
     {id: profile.id},
     {},
@@ -68,7 +67,6 @@ module.exports = (app, db)=>{
   
   passport.use(new LocalStrategy((username, password,done)=>{
   db.collection('users').findOne({username:username}, (err, user)=>{
-  console.log('User: '+username+' attempted to login');
   if (err){ return done(err)};
   if (!user){ console.log("No such user!"); return done(null, false);  };
   if (!bcrypt.compareSync(password, user.password)){ console.log("Password incorrect."); return done(null, false);};
