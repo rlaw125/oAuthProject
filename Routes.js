@@ -43,6 +43,7 @@ db.collection('users').findOne({ username: req.body.username }, function (err, u
           console.log('user not in system' + req.path);
             db.collection('users').insertOne(
               {username: req.body.username,
+               name: req.body.name,
                password: hash},
               (err, doc) => {
                   if(err) {
