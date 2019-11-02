@@ -1,6 +1,7 @@
-html {
+body {
   background: linear-gradient(270deg, #c1e1ec, #eafeea);
   font-family: sans-serif;
+  margin: 15px;
 }
 
 
@@ -14,4 +15,17 @@ html {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+}
+
+img {
+  width: 35vw;
+  height: 30vw;
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 60%;
 }
