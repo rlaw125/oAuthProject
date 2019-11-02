@@ -16,7 +16,7 @@ return next();
 }
   
   app.route('/').get((req, res) => {
-    res.render(process.cwd()+'/views/pug/index.pug', {title:'Welcome to my OAuth Project', message: 'Please login', showLogin: true, showRegistration: true});
+    res.render(process.cwd()+'/views/pug/index.pug', {title:'Welcome to my OAuth Project', message: 'To continue, please login.', showLogin: true, showRegistration: true});
   });
 
 app.post('/login', passport.authenticate('local', {failureRedirect:'/', successRedirect: '/profile'})); 

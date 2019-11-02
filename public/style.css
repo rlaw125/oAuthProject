@@ -18,14 +18,21 @@ body {
 }
 
 .flex {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: auto auto;
 }
 
 img {
-  width: 35vw;
-  height: 30vw;
+  width: 25vw;
+  height: 20vw;
   margin-right: auto;
   margin-left: auto;
   border-radius: 60%;
+}
+
+img:hover {
+  width: 30vw;
+  height: 22.5vw;
+  border: solid;
 }

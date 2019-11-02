@@ -7,17 +7,15 @@ html
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1')
+    script(src="https://kit.fontawesome.com/d553199b78.js", crossorigin="anonymous")
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm', crossorigin='anonymous')
     link(rel='stylesheet', href='/public/style.css')
+    
   body
-    h1.border.center #{title}
-    h2.center#pug-success-message
-    | #{title}
+    h2.center #{title}
     p#pug-variable= message
-  
+    
     if showLogin
-      hr
-      p Login Form
       form(action='/login', method='post')
         div
           label Username:
@@ -27,8 +25,8 @@ html
           input(type='password', name='password')
         div
           input(type='submit', value='Log In', class='btn-primary')
-      a(href='/auth/github') Log in with Github
-      
+      div(class='link')
+        a(href='/auth/github') Log in with Github
     if showRegistration
       hr
       p Registration Form
